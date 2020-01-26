@@ -17,7 +17,7 @@
 # build for Meson reference board.
 #
 
-PRODUCT_DIR := odroidn2
+PRODUCT_DIR := homie
 
 # Dynamic enable start/stop zygote_secondary in 64bits
 # and 32bit system, default closed
@@ -36,9 +36,9 @@ endif
 
 BOARD_INSTALL_VULKAN := true
 
-$(call inherit-product, device/hardkernel/$(PRODUCT_DIR)/vendor_prop.mk)
+$(call inherit-product, device/followthestack/$(PRODUCT_DIR)/vendor_prop.mk)
 $(call inherit-product, device/hardkernel/common/products/mbox/product_mbox.mk)
-$(call inherit-product, device/hardkernel/$(PRODUCT_DIR)/device.mk)
+$(call inherit-product, device/followthestack/$(PRODUCT_DIR)/device.mk)
 $(call inherit-product-if-exists, vendor/google/products/gms.mk)
 #########################################################################
 #
@@ -78,8 +78,8 @@ PRODUCT_PROPERTY_OVERRIDES += \
         ro.hdmi.device_type=4 \
         persist.sys.hdmi.keep_awake=false
 
-PRODUCT_NAME := odroidn2
-PRODUCT_DEVICE := odroidn2
+PRODUCT_NAME := homie
+PRODUCT_DEVICE := homie
 PRODUCT_BRAND := ODROID
 PRODUCT_MODEL := ODROID-N2
 PRODUCT_MANUFACTURER := HardKernel Co., Ltd.
@@ -211,7 +211,7 @@ PRODUCT_PACKAGES += \
 endif
 
 PRODUCT_COPY_FILES += \
-    device/hardkernel/$(PRODUCT_DIR)/fstab.system.odroidn2:$(TARGET_COPY_OUT_VENDOR)/etc/fstab.odroidn2
+    device/followthestack/$(PRODUCT_DIR)/fstab.system.homie:$(TARGET_COPY_OUT_VENDOR)/etc/fstab.homie
 
 #########################################################################
 #
@@ -307,7 +307,7 @@ TARGET_ENABLE_TA_SIGN := true
 TARGET_USE_HW_KEYMASTER := true
 endif
 
-$(call inherit-product, device/hardkernel/common/media.mk)
+$(call inherit-product, device/followthestack/common/media.mk)
 
 #########################################################################
 #

@@ -14,7 +14,7 @@
 # limitations under the License.
 #
 
-PRODUCT_DIR := odroidn2
+PRODUCT_DIR := homie
 
 ifneq ($(ANDROID_BUILD_TYPE), 64)
 TARGET_CPU_ABI := armeabi-v7a
@@ -125,9 +125,9 @@ endif
 TARGET_SUPPORT_USB_BURNING_V2 := true
 
 ifeq ($(BOARD_BUILD_SYSTEM_ROOT_IMAGE), true)
-TARGET_RECOVERY_FSTAB := device/hardkernel/$(PRODUCT_DIR)/recovery/recovery_system.fstab
+TARGET_RECOVERY_FSTAB := device/followthestack/$(PRODUCT_DIR)/recovery/recovery_system.fstab
 else
-TARGET_RECOVERY_FSTAB := device/hardkernel/$(PRODUCT_DIR)/recovery/recovery.fstab
+TARGET_RECOVERY_FSTAB := device/followthestack/$(PRODUCT_DIR)/recovery/recovery.fstab
 endif
 
 #BOARD_HAL_STATIC_LIBRARIES := libhealthd.mboxdefault
