@@ -19,7 +19,7 @@ SIGNJAR := out/host/linux-x86/framework/signapk.jar
 BOOT_IMG := $(PRODUCT_OUT)/boot.img
 DTBS := meson64_odroidn2_android.dtb
 SELFINSTALL_BOOT_INI := boot.ini
-SELF_SRC_DIR := device/hardkernel/$(PRODUCT_DIR)/selfinstall
+SELF_SRC_DIR := device/followthestack/$(PRODUCT_DIR)/selfinstall
 MKFS_FAT := device/hardkernel/proprietary/bin/mkfs.fat
 
 VENDOR := vendor.img
