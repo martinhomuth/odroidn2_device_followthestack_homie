@@ -1,0 +1,98 @@
+#assert(getprop("ro.build.product" == "odroidn2"));
+
+mount("ext4", "EMMC", "/dev/block/system", "/system");
+
+if
+  file_getprop("/system/build.prop", "ro.build.version.incremental") == "20191121" || file_getprop("/system/build.prop", "ro.build.version.incremental") == "20191204"
+then
+  mount("ext4", "EMMC", "/dev/block/vendor", "/vendor");
+  ui_print("The firmwares released on 20191121, 20191204 were included wrong updater. It will just update OdroidSettings and finish");
+  package_extract_file("vendor/app/OdroidSettings/OdroidSettings.apk", "/vendor/app/OdroidSettings/OdroidSettings.apk");
+  run_program("/sbin/sed", "-i", "s/^ro.build.version.incremental=.*/ro.build.version.incremental=20191025/g", "/system/build.prop");
+  show_progress(1.0000, 0);
+else
+
+
+show_progress(1.0000, 0);
+
+ui_print("\n\nHardkernel's ODROID-N2 Android Update is started...");
+set_progress(0.1000);
+
+ui_print("   Bootloader is flashing...");
+package_extract_file("u-boot.bin", "/tmp/u-boot.bin");
+run_program("/sbin/dd", "if=/tmp/u-boot.bin", "of=/dev/block/bootloader");
+
+set_progress(0.2000);
+
+ui_print("   'boot' partition is flashing...");
+package_extract_file("boot.img", "/tmp/boot.img");
+run_program("/sbin/dd", "if=/tmp/boot.img", "of=/dev/block/boot");
+
+set_progress(0.3000);
+
+ui_print("   dtb image is flashing...");
+package_extract_file("meson64_odroidn2_android.dtb", "/tmp/meson64_odroidn2_android.dtb");
+run_program("/sbin/dd", "if=/tmp/meson64_odroidn2_android.dtb", "of=/dev/block/dtbs");
+
+set_progress(0.4000);
+
+ui_print("   'recovery' partition is flashing...");
+package_extract_file("recovery.img", "/tmp/recovery.img");
+run_program("/sbin/dd", "if=/tmp/recovery.img", "of=/dev/block/recovery");
+
+set_progress(0.5000);
+
+ui_print("   'vendor' partition is extracting...");
+mount("ext4", "EMMC", "/dev/block/vendor", "/vendor");
+package_extract_dir("vendor", "/vendor");
+run_program("/sbin/ln", "-sf", "/vendor/lib/egl/libGLES_mali.so", "/vendor/lib/hw/vulkan.odroidn2.so");
+run_program("/sbin/rm", "-rf", "/vendor/lib/modules/rtl8192c-common.ko");
+run_program("/sbin/rm", "-rf", "/vendor/lib/modules/rtl8192cu.ko");
+run_program("/sbin/rm", "-rf", "/vendor/lib/modules/rtl_usb.ko");
+run_program("/sbin/rm", "-rf", "/vendor/lib/modules/rtlwifi.ko");
+
+#ui_print("   overwrite /odm/default.prop...");
+#mount("vfat", "EMMC", "/dev/block/odm", "/odm");
+#run_program("/sbin/cp", "/vendor/etc/default.prop.template", "/odm/default.prop");
+
+ui_print("   change permission for makedefaultprop");
+run_program("/sbin/chmod", "755", "/vendor/bin/makedefaultprop");
+run_program("/sbin/chown", "root:shell", "/vendor/bin/makedefaultprop");
+
+ui_print("   remove lowmemorykiller config files.");
+run_program("/sbin/rm", "-rf", "/vendor/etc/lowmemorykiller*.txt");
+
+set_progress(0.6000);
+
+ui_print("   'system' partition is extracting...");
+mount("ext4", "EMMC", "/dev/block/system", "/system");
+package_extract_dir("system", "/system");
+
+if
+  sha1_check(read_file("/system/etc/g.prop")) != ""
+then
+  run_program("/sbin/rm", "-rf", "/system/priv-app/PackageInstaller/");
+endif;
+
+ui_print("   change permission for fw_setenv, fw_printenv");
+run_program("/sbin/chmod", "755", "/system/bin/fw_setenv");
+run_program("/sbin/chmod", "755", "/system/bin/fw_printenv");
+run_program("/sbin/chmod", "755", "/system/bin/screencontrol");
+run_program("/sbin/chown", "root:shell", "/system/bin/screencontrol");
+
+# odroidthings service
+run_program("/sbin/chmod", "755", "/vendor/bin/hw/vendor.hardkernel.hardware.odroidthings@1.0-service");
+run_program("/sbin/chown", "root:shell", "/vendor/bin/hw/vendor.hardkernel.hardware.odroidthings@1.0-service");
+
+set_progress(0.7500);
+
+ui_print("   'product' partition is extracting...");
+mount("ext4", "EMMC", "/dev/block/product", "/product");
+package_extract_dir("product", "/product");
+
+set_progress(0.9000);
+
+ui_print("Android update is completed.\nHave fun with ODROID-N2!\n\n");
+set_progress(1.0000);
+
+endif;
