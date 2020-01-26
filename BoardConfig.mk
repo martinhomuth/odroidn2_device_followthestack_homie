@@ -46,8 +46,8 @@ TARGET_NO_BOOTLOADER := false
 TARGET_NO_KERNEL := false
 TARGET_NO_RADIOIMAGE := true
 
-TARGET_BOARD_PLATFORM := odroidn2
-TARGET_BOOTLOADER_BOARD_NAME := odroidn2
+TARGET_BOARD_PLATFORM := homie
+TARGET_BOOTLOADER_BOARD_NAME := homie
 
 # Allow passing `--second` to mkbootimg via 2ndbootloader.
 TARGET_BOOTLOADER_IS_2ND := false
