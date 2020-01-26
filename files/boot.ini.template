@@ -48,7 +48,7 @@ setenv bootlabel "Android Pie (64Bit)"
 #    "2560x1440p60hz"   | 2560x1440 Progressive 60Hz
 #    "2560x1600p60hz"   | 2560x1600 Progressive 60Hz
 #    "3440x1440p60hz"   | 3440x1440 Progressive 60Hz
-setenv hdmimode "1080p60hz"
+setenv hdmimode "800x480p60hz"
 
 ### voutmode : hdmi or dvi
 setenv voutmode "hdmi"
@@ -69,7 +69,7 @@ setenv display_autodetect "true"
 # setenv modeline "2560,1440,241500,88800,60,2560,2608,2640,2720,1440,1442,1447,1481,1,1,1"
 
 # disable vu7
-setenv disable_vu7 "false"
+setenv disable_vu7 "true"
 
 # invert touch screen x,y
 setenv touch_invert_x "false"
@@ -84,7 +84,7 @@ setenv video_reverse "0"
 setenv colorattribute "444,8bit"
 
 setenv suspend_hdmiphy "1"
-setenv heartbeat "1"
+setenv heartbeat "0"
 setenv sg_tablesize "2"
 ############################################################
 #
