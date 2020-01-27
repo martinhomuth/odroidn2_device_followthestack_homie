@@ -1,4 +1,4 @@
-#assert(getprop("ro.build.product" == "odroidn2"));
+#assert(getprop("ro.build.product" == "homie"));
 
 mount("ext4", "EMMC", "/dev/block/system", "/system");
 
@@ -15,7 +15,7 @@ else
 
 show_progress(1.0000, 0);
 
-ui_print("\n\nHardkernel's ODROID-N2 Android Update is started...");
+ui_print("\n\nFollowthestack's HOMIE Android Update is started...");
 set_progress(0.1000);
 
 ui_print("   Bootloader is flashing...");
@@ -92,7 +92,7 @@ package_extract_dir("product", "/product");
 
 set_progress(0.9000);
 
-ui_print("Android update is completed.\nHave fun with ODROID-N2!\n\n");
+ui_print("Android update is completed.\nHave fun with HOMIE!\n\n");
 set_progress(1.0000);
 
 endif;

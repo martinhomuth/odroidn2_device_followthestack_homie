@@ -1,8 +1,8 @@
-#assert(getprop("ro.build.product" == "odroidn2
+#assert(getprop("ro.build.product" == "homie
 
 show_progress(1.0000, 0);
 
-ui_print("\n\nHardkernel's ODROID-N2 Android Update is started...");
+ui_print("\n\nFollowthestack's HOMIE Android Update is started...");
 set_progress(0.1000);
 
 ui_print("   'system' partition is flashing...");
@@ -44,5 +44,5 @@ run_program("/sbin/cp", "/vendor/etc/hardkernel-720.bmp.gz", "/sdcard/boot-logo.
 unmount("/vendor");
 unmount("/sdcard");
 
-ui_print("Self installation is completed.\nHave fun with ODROID-N2!\n\n");
+ui_print("Self installation is completed.\nHave fun with HOMIE!\n\n");
 set_progress(1.0000);
